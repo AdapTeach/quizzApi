@@ -12,4 +12,9 @@ module.exports = function(app){
         .put(auth.ensureAuthenticated,questionCtrl.update)
         .delete(auth.ensureAuthenticated,questionCtrl.remove);
 
+    app.route('/question/:id/answer')
+        .post(auth.ensureAuthenticated,questionCtrl.addAnswer);
+
+    app.route('/question/:id/answer/:id')
+        .delete(auth.ensureAuthenticated,questionCtrl.removeAnswer);
 };

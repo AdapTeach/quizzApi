@@ -8,7 +8,7 @@ var express = require('express'),
 
 module.exports = function () {
 
-    config.getGlobbedFiles('./**/**/*.model.js').forEach(function (routePath) {
+    config.getGlobbedFiles('./src/model/*.model.js').forEach(function (routePath) {
         require(path.resolve(routePath));
     });
 
