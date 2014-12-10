@@ -36,12 +36,12 @@ module.exports = function () {
     }
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded());
+    //app.use(bodyParser.urlencoded());
     app.use(methodOverride());
 
     app.use(require('cors')());
 
-    config.getGlobbedFiles('./**/**/*.route.js').forEach(function (routePath) {
+    config.getGlobbedFiles('./src/**/*.route.js').forEach(function (routePath) {
         require(path.resolve(routePath))(app);
     });
 
@@ -52,7 +52,6 @@ module.exports = function () {
         // Log it
         console.error(err.stack);
 
-        // Error page
         res.status(500).json({
             error: err.stack
         });

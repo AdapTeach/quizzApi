@@ -1,7 +1,6 @@
-var q = require('q'),
-    mongoose = require("mongoose-q")(require('mongoose')),
+var mongoose = require("mongoose-q")(require('mongoose')),
     Schema = mongoose.Schema,
-    QuizzSchema = new Schema({
+    QuizSchema = new Schema({
         name: {
             type: String,
             unique: true,
@@ -18,4 +17,4 @@ var q = require('q'),
     });
 
 
-module.exports = mongoose.model('Quizz',QuizzSchema);
+module.exports = mongoose.model('Quiz',QuizSchema);

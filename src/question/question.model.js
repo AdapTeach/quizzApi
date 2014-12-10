@@ -1,5 +1,4 @@
-var q = require('q'),
-    mongoose = require("mongoose-q")(require('mongoose')),
+var mongoose = require("mongoose-q")(require('mongoose')),
     Schema = mongoose.Schema,
     QuestionSchema = new Schema({
         name: {
@@ -15,12 +14,15 @@ var q = require('q'),
             type: String,
             required: 'question is required'
         },
-        answers: [],
+        answers: [{
+            isCorrect: Boolean,
+            text: String,
+            url: String
+        }],
         creator : {
             type : String,
             required : 'creator is required'
         }
     });
-
 
 module.exports = mongoose.model('Question',QuestionSchema);

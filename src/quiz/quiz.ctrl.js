@@ -1,10 +1,10 @@
 var mongoose = require('mongoose-q')(require('mongoose')),
-    Question = mongoose.model('Question'),
-    error = require('../error/HttpError');
+    Quiz = mongoose.model('Quiz'),
+    error = require;
 
 module.exports = {
     findAll : function findall(request, response){
-        Question
+        Quiz
             .find({ creator : request.user._id })
             .execQ()
             .then(function(questions){
@@ -13,7 +13,7 @@ module.exports = {
             .catch(error.handle(response));
     },
     findOne: function findOne(request, response){
-        Question
+        Quiz
             .findOne({ _id : request.param._id })
             .execQ()
             .then(function(question){
@@ -21,8 +21,8 @@ module.exports = {
             })
             .catch(error.handle(response));
     },
-    create: function(request,response){
-        var newQuestion = new Question(request.body);
+    create: function create(request,response){
+        var newQuestion = new Quiz(request.body);
         newQuestion
             .save()
             .execQ()
@@ -31,14 +31,14 @@ module.exports = {
             })
             .catch(error.handle(response));
     },
-    update: function(request,response){
+    update: function update(request,response){
         var query;
         if(request.params.id){
-            query = Question.findOneAndUpdate({ _id : request.params._id },request.body);
+            query = Quiz.findOneAndUpdate({ _id : request.params._id },request.body);
         }else{
             var id = request.body._id;
             delete request.body._id;
-            query = Question.findOneAndUpdate({ _id : id },request.body);
+            query = Quiz.findOneAndUpdate({ _id : id },request.body);
         }
         query
             .execQ()
@@ -47,13 +47,32 @@ module.exports = {
             })
             .catch(error.handle(response));
     },
-    remove: function(request,response){
-        Question
+    remove: function remove(request,response){
+        Quiz
             .delete({ _id : request.param._id })
             .execQ()
             .then(function(question){
                 response.json(question);
             })
             .catch(error.handle(response));
+    },
+    addQuestion: function addQuestion(request,response){
+        Quiz
+            .findOneAndUpdate({ _id : request.params.id},{$push: { questions : request.params.questionId }})
+            .then(function(){
+                response.json(question);
+            })
+            .catch(error.handle(response));
+    },
+    removeQuestion: function removeQuestion(request,response){
+        Quiz
+            .findOneAndUpdate({ _id : request.params.id},{$pull: { questions : request.params.questionId }})
+                .then(function(){
+                    response.json(question);
+                })
+                .catch(error.handle(response));
+    },
+    answerQuestion: function answerQuestion(request,response){
+
     }
 };
